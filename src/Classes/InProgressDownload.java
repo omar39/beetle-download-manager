@@ -6,18 +6,20 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class InProgressDownload {
-    private File file;
+    private File downloadFile;
     private double currentSize;
     
-    public InProgressDownload(File file)
+    public InProgressDownload(File downloadFile)
     {
-        this.file = file;
+        this.downloadFile = downloadFile;
     }
     public double getCurrentSize()
     {
         
         return currentSize;
     }
+    // this function takes URL and the desired directory
+    // and download it
    public void downloadFile(String fileURL, String saveDir) throws IOException {
         
        long downloadedLength = 0;

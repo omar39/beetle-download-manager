@@ -23,7 +23,11 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -60,6 +64,43 @@ public class MainInterfaceController implements Initializable {
     
      public ArrayList<Classes.File> Files = new ArrayList<Classes.File>();
      ExecutorService executor = Executors.newFixedThreadPool(10);
+     
+     public void Load() {
+        try { 
+            BufferedReader r = new BufferedReader(new FileReader("Downloads.txt"));
+            String line = r.readLine();
+            while (line != null) {
+                String[] SplittedLine = line.split("@");
+                Classes.File currFile = new Classes.File(SplittedLine[0], SplittedLine[1]);
+                Files.add(currFile);
+                line = r.readLine();
+            }
+        }
+        catch (IOException ex) { 
+            System.out.println(ex.getMessage());
+        }
+     } 
+     
+     public void Save() {
+        try {
+            FileWriter write = new FileWriter("Downloads.txt", false);
+            PrintWriter print_line = new PrintWriter(write);
+            for (int i = 0; i < Files.size(); i++) {
+                Classes.File currFile = Files.get(i);
+                String Line = "";
+                Line += currFile.getUrl();
+                Line += "@";
+                Line += currFile.getName();
+                Line += "@";
+                Line += currFile.getSize();
+                print_line.println(Line);
+            }
+            write.close();;
+            print_line.close();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+     }
     
     public void Update() {
         TreeTableViewSelectionModel<Download> sm = downView.getSelectionModel();
@@ -182,6 +223,7 @@ public class MainInterfaceController implements Initializable {
         AddButton.setOnAction(this::AddButton_OnClick);
         PauseButton.setOnAction(this::PauseButton_OnClick);
         ResumeButton.setOnAction(this::ResumeButton_OnClick);
+        Load();
         Timer t = new Timer( );
         t.scheduleAtFixedRate(new TimerTask() {
         @Override
@@ -190,6 +232,13 @@ public class MainInterfaceController implements Initializable {
             }
         }, 1000, 600);
         
+        Timer t2 = new Timer( );
+        t2.scheduleAtFixedRate(new TimerTask() {
+        @Override
+        public void run() {
+            Platform.runLater(() -> { Save(); });
+            }
+        }, 1000, 3000);
     }    
     
     

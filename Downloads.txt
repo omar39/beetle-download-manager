@@ -1,0 +1,2 @@
+https://desktop.githubusercontent.com/releases/1.6.5-b8b05c40/GitHubDesktopSetup.exe@GitHubDesktopSetup.exe@80.52681732177734
+https://repo.anaconda.com/archive/Anaconda3-2018.12-Windows-x86_64.exe@Anaconda3-2018.12-Windows-x86_64.exe@614.2560653686523

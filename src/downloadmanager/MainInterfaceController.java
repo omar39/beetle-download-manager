@@ -52,9 +52,18 @@ public class MainInterfaceController implements Initializable {
     @FXML
     private Button AddButton;
     
+    @FXML 
+    private Button PauseButton;
+    
+    @FXML 
+    private Button ResumeButton;
+    
      public ArrayList<Classes.File> Files = new ArrayList<Classes.File>();
+     ExecutorService executor = Executors.newFixedThreadPool(10);
     
     public void Update() {
+        TreeTableViewSelectionModel<Download> sm = downView.getSelectionModel();
+        int rowIndex = sm.getSelectedIndex();
         JFXTreeTableColumn<Download, String> dSelect = new JFXTreeTableColumn<>("");
         dSelect.setPrefWidth(30);
         dSelect.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Download, String>, ObservableValue<String>>() {
@@ -124,15 +133,34 @@ public class MainInterfaceController implements Initializable {
         downView.getColumns().setAll(dSelect,dName,dStatus,dSpeed,dSize,dTime,dDate);
         downView.setRoot(root);
         downView.setShowRoot(false);
+        
+         sm = downView.getSelectionModel();
+         sm.select(rowIndex);
+        
     }
     
-    
+     private void PauseButton_OnClick(ActionEvent event)  {
+        TreeTableViewSelectionModel<Download> sm = downView.getSelectionModel();
+        int rowIndex = sm.getSelectedIndex();
+        Files.get(rowIndex).Pause();
+        
+     }
+     
+     private void ResumeButton_OnClick(ActionEvent event)  {
+         TreeTableViewSelectionModel<Download> sm = downView.getSelectionModel();
+        int rowIndex = sm.getSelectedIndex();
+        System.out.println("zh2t");
+        Runnable runnableTask = () -> {
+            Files.get(rowIndex).Resume();
+            };
+            
+            executor.execute(runnableTask);
+     }
     private void AddButton_OnClick(ActionEvent event)  {
         try {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             Clipboard clipboard = toolkit.getSystemClipboard();
             String result = (String)clipboard.getData(DataFlavor.stringFlavor);
-            ExecutorService executor = Executors.newFixedThreadPool(10);
             Runnable runnableTask = () -> {
                 Classes.File f = new Classes.File(result, "C:\\Users\\zulam\\OneDrive\\Desktop\\adpoasoafsoads\\");
                 Files.add(f);
@@ -152,14 +180,15 @@ public class MainInterfaceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         AddButton.setOnAction(this::AddButton_OnClick);
-        
+        PauseButton.setOnAction(this::PauseButton_OnClick);
+        ResumeButton.setOnAction(this::ResumeButton_OnClick);
         Timer t = new Timer( );
         t.scheduleAtFixedRate(new TimerTask() {
         @Override
         public void run() {
             Platform.runLater(() -> { Update(); });
             }
-        }, 1000, 750);
+        }, 1000, 600);
         
     }    
     

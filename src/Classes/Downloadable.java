@@ -11,7 +11,10 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
@@ -24,12 +27,11 @@ public class Downloadable {
     private final String URL;
     private final String Path;
     private String status = "Paused";
+    private boolean paused = false;
     private double speed;
     private double fileSize;
     private long downloadedBytes;
     private long timeleft;
-    BufferedInputStream inputStream;
-    BufferedOutputStream outputStream;
     BufferedInputStream BIS;
     FileOutputStream FIS;
     URL urlCore;
@@ -60,27 +62,46 @@ public class Downloadable {
         return ret;
     }
     
+    public void Pause() {
+        paused = true;
+        status = "Paused";
+    }
+    
+    public void Resume() { 
+        status = "Downloading";
+        paused = false;
+        try {
+            Start();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     public void Start() throws IOException { 
         urlCore = new URL(URL);
-        URLConnection connection = urlCore.openConnection();
+        HttpURLConnection connection = (HttpURLConnection)urlCore.openConnection();
         java.io.File file = new java.io.File(Path);
         if (file.exists()) {
             downloadedBytes = file.length();
-            connection.setRequestProperty("Range", "bytes=" + downloadedBytes + "-");
-            outputStream = new BufferedOutputStream(new FileOutputStream(file, true));
+            connection.setRequestProperty("Range", "bytes="+(file.length())+"-");
+            System.out.println(downloadedBytes);
         }
         else {
-            outputStream = new BufferedOutputStream(new FileOutputStream(file));
+             connection.setRequestProperty("Range", "bytes=" + downloadedBytes + "-");
         }
         connection.connect();
-        inputStream = new BufferedInputStream(connection.getInputStream());
         byte[] buffer = new byte[1024*8];
         int bytesCount;
-        BIS = new BufferedInputStream(urlCore.openStream());
-        FIS = new FileOutputStream(file);
+        BIS = new BufferedInputStream(connection.getInputStream());
+        if (downloadedBytes == 0)
+            FIS = new FileOutputStream(Path);
+        else
+            FIS = new FileOutputStream(Path, true);
         int count = 0;
         status = "Downloading";
         while ((count = BIS.read(buffer, 0, 1024)) != -1) {
+            if (paused)
+                break;
             downloadedBytes += count;
             long before = System.nanoTime();
             FIS.write(buffer, 0, count);
@@ -96,8 +117,6 @@ public class Downloadable {
         }
         BIS.close();
         FIS.close();
-        inputStream.close();
-        outputStream.close();
     }
 
             

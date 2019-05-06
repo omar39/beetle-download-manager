@@ -72,9 +72,12 @@ public class MainInterfaceController implements Initializable {
             while (line != null) {
                 String[] SplittedLine = line.split("@");
                 Classes.File currFile = new Classes.File(SplittedLine[0], SplittedLine[1]);
+                if (SplittedLine[2].equals("1"))
+                    currFile.setStatus("Finished");
                 Files.add(currFile);
                 line = r.readLine();
             }
+            r.close();
         }
         catch (IOException ex) { 
             System.out.println(ex.getMessage());
@@ -92,7 +95,7 @@ public class MainInterfaceController implements Initializable {
                 Line += "@";
                 Line += currFile.getName();
                 Line += "@";
-                Line += currFile.getSize();
+                Line += currFile.getStatus().equals("Finished") ? "1" : "0";
                 print_line.println(Line);
             }
             write.close();;
@@ -168,7 +171,12 @@ public class MainInterfaceController implements Initializable {
         
         ObservableList<Download> downloads = FXCollections.observableArrayList();
         for (int i = 0; i < Files.size(); i++){ 
-            downloads.add(new Download("", Files.get(i).getName() , Files.get(i).getStatus(), String.valueOf((long)Files.get(i).getspeed()) + "KB/s", String.valueOf((long)Files.get(i).getSize()) + " MB", Files.get(i).Left(), Files.get(i).getDataModifiedDate()));
+            String _Name = Files.get(i).getName();
+            String _Status = Files.get(i).getStatus();
+            String _Speed = Files.get(i).getSpeedString();
+            String _Size = Files.get(i).getSizeString();
+            String _TimeLeft = Files.get(i).getStringLeftTime();
+            downloads.add(new Download("", _Name, _Status, _Speed,  _Size, _TimeLeft, Files.get(i).getDataModifiedDate()));
         }
         final TreeItem<Download> root = new RecursiveTreeItem<Download>(downloads, RecursiveTreeObject::getChildren);
         downView.getColumns().setAll(dSelect,dName,dStatus,dSpeed,dSize,dTime,dDate);

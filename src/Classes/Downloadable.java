@@ -47,27 +47,80 @@ public class Downloadable {
         fileSize = s;
     }
     
+    public String getSizeString() {
+        String res = "";
+        String[] sizes = { "B", "KB", "MB", "GB", "TB" };
+        int idx = 0;
+        long sz = (long)downloadedBytes;
+        while (sz >= 1024 && idx < sizes.length - 1) { 
+            idx++;
+            sz /= 1204;
+        }
+        res += String.valueOf(sz);
+        res += sizes[idx];
+        res += " / ";
+        idx = 0;
+        sz = (long)fileSize;
+        while (sz >= 1024 && idx < sizes.length - 1) { 
+            idx++;
+            sz /= 1204;
+        }
+        res += String.valueOf(sz);
+        res += sizes[idx];
+        return res;
+    }
+    
     public String getStatus() {
         return status;
+    }
+    
+    public void setStatus(String _s) {
+        status = _s;
     }
     
     public double getspeed() {
         return speed;
     }
     
-    public String Left(){ 
-        String ret = "";
-        ret += timeleft;
-        ret += " secs";
-        return ret;
+    public String getSpeedString() { 
+        if (!status.equals("Downloading"))
+            return "";
+        String res = "";
+        long tmp = (long)speed;
+        tmp /= 1024;
+        tmp /= 1024;
+        if (tmp <= 1024)
+            res += String.valueOf(tmp) + "KB/s";
+        else {
+            res += String.valueOf(tmp / 1024) + ".";
+            res += String.valueOf(tmp % 1024) + "MB/s";
+        }
+        return res;
+    }
+    
+    public String getStringLeftTime() {
+        String res = "";
+        long hours = timeleft / 3600;
+        long minutes = (timeleft % 3600) / 60;
+        long seconds = timeleft % 60;
+        if (hours > 0)
+            res += String.valueOf(hours) + " Hours ";
+        if (minutes > 0)
+            res += String.valueOf(minutes) + " Minutes ";
+        if (seconds > 0)
+            res += String.valueOf(seconds) + " Seconds ";
+        return res;
     }
     
     public void Pause() {
         paused = true;
-        status = "Paused";
+        if (status.equals("Downloading"))
+            status = "Paused";
     }
     
     public void Resume() { 
+        if (!status.equals("Paused"))
+            return;
         status = "Downloading";
         paused = false;
         try {
@@ -108,13 +161,13 @@ public class Downloadable {
             long after = System.nanoTime();
             double diff =  (double)after - (double)before;
             double mul = (count * 1e9) / diff;
-            mul /= 1024;
-            mul /= 1024;
             speed = mul;
             double l = fileSize - downloadedBytes;
             l /= 1024;
-            timeleft = (long)(l / speed);
+            timeleft = (long)(l / (speed / (1024 * 1024)));
         }
+        if (downloadedBytes == fileSize)
+            setStatus("Finished");
         BIS.close();
         FIS.close();
     }

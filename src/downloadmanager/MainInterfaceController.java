@@ -19,11 +19,26 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.*;
 import javafx.scene.control.TreeTableColumn;
 import javafx.util.Callback;
 import javafx.collections.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableView.TreeTableViewSelectionModel;
 
 /**
  *
@@ -34,8 +49,12 @@ public class MainInterfaceController implements Initializable {
     @FXML
      private JFXTreeTableView<Download> downView;
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    @FXML
+    private Button AddButton;
+    
+     public ArrayList<Classes.File> Files = new ArrayList<Classes.File>();
+    
+    public void Update() {
         JFXTreeTableColumn<Download, String> dSelect = new JFXTreeTableColumn<>("");
         dSelect.setPrefWidth(30);
         dSelect.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Download, String>, ObservableValue<String>>() {
@@ -98,34 +117,55 @@ public class MainInterfaceController implements Initializable {
         });
         
         ObservableList<Download> downloads = FXCollections.observableArrayList();
-        downloads.add(new Download("test","test","test","test","test","test","test"));
+        for (int i = 0; i < Files.size(); i++){ 
+            downloads.add(new Download("", Files.get(i).getName() , Files.get(i).getStatus(), String.valueOf((long)Files.get(i).getspeed()) + "KB/s", String.valueOf((long)Files.get(i).getSize()) + " MB", Files.get(i).Left(), Files.get(i).getDataModifiedDate()));
+        }
         final TreeItem<Download> root = new RecursiveTreeItem<Download>(downloads, RecursiveTreeObject::getChildren);
         downView.getColumns().setAll(dSelect,dName,dStatus,dSpeed,dSize,dTime,dDate);
         downView.setRoot(root);
         downView.setShowRoot(false);
+    }
+    
+    
+    private void AddButton_OnClick(ActionEvent event)  {
+        try {
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Clipboard clipboard = toolkit.getSystemClipboard();
+            String result = (String)clipboard.getData(DataFlavor.stringFlavor);
+            ExecutorService executor = Executors.newFixedThreadPool(10);
+            Runnable runnableTask = () -> {
+                Classes.File f = new Classes.File(result, "C:\\Users\\zulam\\OneDrive\\Desktop\\adpoasoafsoads\\");
+                Files.add(f);
+                f.run();
+            };
+            
+            executor.execute(runnableTask);
+            
+            //new Thread(f).start();
+        } catch (UnsupportedFlavorException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        AddButton.setOnAction(this::AddButton_OnClick);
+        
+        Timer t = new Timer( );
+        t.scheduleAtFixedRate(new TimerTask() {
+        @Override
+        public void run() {
+            Platform.runLater(() -> { Update(); });
+            }
+        }, 1000, 750);
+        
     }    
     
     
     
-    class Download extends RecursiveTreeObject<Download>{
-    StringProperty selection;
-    StringProperty downName; 
-    StringProperty downStatus;
-    StringProperty downSpeed;
-    StringProperty downSize;
-    StringProperty downTime;
-    StringProperty downDate;
-    
-    public Download(String selection,String downName,String downStatus,String downSpeed,String downSize,String downTime,String downDate){
-        this.selection=new SimpleStringProperty(selection);
-        this.downName=new SimpleStringProperty(downName);
-        this.downStatus=new SimpleStringProperty(downStatus);
-        this.downSpeed=new SimpleStringProperty(downSpeed);
-        this.downSize=new SimpleStringProperty(downSize);
-        this.downTime=new SimpleStringProperty(downTime);
-        this.downDate=new SimpleStringProperty(downDate);
-        }
-    }
+   
 
     
 }

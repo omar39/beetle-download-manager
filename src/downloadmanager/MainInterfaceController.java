@@ -6,24 +6,15 @@
 package downloadmanager;
 
 import Classes.FileTypes.MusicFile;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -34,8 +25,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.*;
 import javafx.scene.control.TreeTableColumn;
@@ -49,6 +38,13 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView.TreeTableViewSelectionModel;
 import javafx.stage.Stage;
 import Classes.FileTypes.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -57,16 +53,36 @@ import Classes.FileTypes.*;
 public class MainInterfaceController implements Initializable {
     
     @FXML
-     private JFXTreeTableView<Download> downView;
+    private JFXTreeTableView<Download> downView;
     
     @FXML
     private Button AddButton;
-    
-    @FXML 
+     
+    @FXML
     private Button PauseButton;
-    
-    @FXML 
+     
+    @FXML
     private Button ResumeButton;
+    
+    public  Scene scene;
+ 
+    @FXML
+    private MenuItem CustomizeButton;
+    
+    @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
+    private FlowPane flowPane;
+
+    @FXML
+    private MenuBar menuBar;
+
+    @FXML
+    private Pane buttonsPane;
+
+    @FXML
+    private Pane statusPane;
     
      public static ArrayList<Classes.File> Files = new ArrayList<Classes.File>();
      public static ExecutorService executor = Executors.newFixedThreadPool(10);
@@ -281,10 +297,12 @@ public class MainInterfaceController implements Initializable {
         public void run() {
             Platform.runLater(() -> { Save(); });
             }
-        }, 1000, 3000);
+        }, 1000, 3000);        
     }    
-    
-     try {
+
+    @FXML
+    private void ShowCustomizeWindow(ActionEvent event) {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomizeWindow.fxml"));
             
             Parent rootl = (Parent)fxmlLoader.load();
@@ -357,10 +375,5 @@ public class MainInterfaceController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Can't Load New Window");
         }               
+    }
 }
-
-
-
-
-
-

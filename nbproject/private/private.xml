@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/zulam/OneDrive/Documents/GitHub/beetle-download-managerr/src/Classes/File.java</file>
-            <file>file:/C:/Users/zulam/OneDrive/Documents/GitHub/beetle-download-managerr/src/downloadmanager/MainInterfaceController.java</file>
-            <file>file:/C:/Users/zulam/OneDrive/Documents/GitHub/beetle-download-managerr/src/Classes/Downloadable.java</file>
-            <file>file:/C:/Users/zulam/OneDrive/Documents/GitHub/beetle-download-managerr/src/Classes/FileTypes/MusicFile.java</file>
-            <file>file:/C:/Users/zulam/OneDrive/Documents/GitHub/beetle-download-managerr/src/downloadmanager/Download.java</file>
-            <file>file:/C:/Users/zulam/OneDrive/Documents/GitHub/beetle-download-managerr/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/zulam/OneDrive/Documents/GitHub/beetle-download-managerr/src/downloadmanager/MainInterface.fxml</file>
-            <file>file:/C:/Users/zulam/OneDrive/Documents/GitHub/beetle-download-managerr/src/downloadmanager/DownloadManager.java</file>
+            <file>file:/C:/Users/AhmedSalama/Documents/GitHub/beetle-download-manager/src/downloadmanager/MainInterfaceController.java</file>
+            <file>file:/C:/Users/AhmedSalama/Documents/GitHub/beetle-download-manager/src/downloadmanager/CustomizeWindowController.java</file>
+            <file>file:/C:/Users/AhmedSalama/Documents/GitHub/beetle-download-manager/src/downloadmanager/DownloadManager.java</file>
+            <file>file:/C:/Users/AhmedSalama/Documents/GitHub/beetle-download-manager/src/downloadmanager/MainInterface.fxml</file>
         </group>
     </open-files>
 </project-private>

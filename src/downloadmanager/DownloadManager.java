@@ -19,12 +19,22 @@ public class DownloadManager extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("MainInterface.fxml"));
+        try {
+                    
+        FXMLLoader fxmlLoader = new  FXMLLoader(getClass().getResource("MainInterface.fxml"));
+        Parent root = (Parent)fxmlLoader.load();
         
         Scene scene = new Scene(root);
-        
+        //stage.setResizable(false);
+        //scene.getStylesheets().add(getClass().getResource("modena_dark.css").toExternalForm());  
+        MainInterfaceController m = fxmlLoader.getController();    
+        m.scene = scene;
         stage.setScene(scene);
         stage.show();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     /**
@@ -32,6 +42,5 @@ public class DownloadManager extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-    }
-    
+    }   
 }

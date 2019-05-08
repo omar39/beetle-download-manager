@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXColorPicker?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="downloadmanager.CustomizeWindowController">
+   <children>
+      <Pane prefHeight="500.0" prefWidth="400.0">
+         <children>
+            <JFXToggleButton fx:id="themeToggleButton" layoutX="214.0" layoutY="401.0" onAction="#toggleTheme" prefHeight="32.0" prefWidth="151.0" />
+            <JFXComboBox fx:id="themeComboBox" layoutX="214.0" layoutY="450.0" onAction="#changeTheme" prefHeight="28.0" prefWidth="151.0" />
+            <Label alignment="CENTER" layoutX="35.0" layoutY="25.0" prefHeight="33.0" prefWidth="134.0" text="Background Color" textAlignment="CENTER" wrapText="true" />
+            <Label alignment="CENTER" layoutX="55.0" layoutY="68.0" prefHeight="33.0" prefWidth="96.0" text="Menu Color" textAlignment="CENTER" wrapText="true" />
+            <Label fx:id="toggleThemeLabel" alignment="CENTER" layoutX="70.0" layoutY="401.0" prefHeight="33.0" prefWidth="69.0" text="light" wrapText="true" />
+            <Label alignment="CENTER" layoutX="70.0" layoutY="444.0" prefHeight="33.0" prefWidth="69.0" text="Theme" wrapText="true" />
+            <Label alignment="CENTER" layoutX="35.0" layoutY="113.0" prefHeight="33.0" prefWidth="134.0" text="Status Bar Color" textAlignment="CENTER" wrapText="true" />
+            <Label alignment="CENTER" layoutX="36.0" layoutY="156.0" prefHeight="33.0" prefWidth="134.0" text="Table Color" textAlignment="CENTER" wrapText="true" />
+            <Label alignment="CENTER" layoutX="37.0" layoutY="205.0" prefHeight="33.0" prefWidth="134.0" text="Buttons Bar Color" textAlignment="CENTER" wrapText="true" />
+            <Label alignment="CENTER" layoutX="57.0" layoutY="254.0" prefHeight="33.0" prefWidth="96.0" text="Menu Opacity" textAlignment="CENTER" wrapText="true" />
+            <Label alignment="CENTER" layoutX="36.0" layoutY="287.0" prefHeight="33.0" prefWidth="134.0" text="Status Bar Opacity" textAlignment="CENTER" wrapText="true" />
+            <Label alignment="CENTER" layoutX="38.0" layoutY="320.0" prefHeight="33.0" prefWidth="134.0" text="Table Opacity" textAlignment="CENTER" wrapText="true" />
+            <Label alignment="CENTER" layoutX="38.0" layoutY="353.0" prefHeight="33.0" prefWidth="134.0" text="Buttons Bar Opacity" textAlignment="CENTER" wrapText="true" />
+            <JFXColorPicker fx:id="anchorPaneColorPicker" layoutX="225.0" layoutY="29.0" onAction="#changeAnchorPaneColor" prefWidth="140.0" />
+            <JFXColorPicker fx:id="menuBarColorPicker" layoutX="225.0" layoutY="72.0" onAction="#changeMenuBarColor" prefWidth="140.0" />
+            <JFXColorPicker fx:id="statusPaneColorPicker" layoutX="225.0" layoutY="117.0" onAction="#changeStatusPaneColor" prefWidth="140.0" />
+            <JFXColorPicker fx:id="tableColorPicker" layoutX="225.0" layoutY="160.0" onAction="#changeTableColor" prefWidth="140.0" />
+            <JFXColorPicker fx:id="buttonPaneColorPicker" layoutX="225.0" layoutY="209.0" onAction="#changeButtonPaneColor" prefWidth="140.0" />
+            <JFXSlider fx:id="menuBarOpacitySlider" layoutX="233.0" layoutY="262.0" onMouseClicked="#changeMenuBarOpacity" />
+            <JFXSlider fx:id="statusPaneOpacitySlider" layoutX="233.0" layoutY="295.0" onMouseClicked="#changeStatusPaneOpacity" />
+            <JFXSlider fx:id="tableOpacitySlider" layoutX="233.0" layoutY="328.0" onMouseClicked="#changeTableOpacity" />
+            <JFXSlider fx:id="buttonsPaneOpacitySlider" layoutX="233.0" layoutY="361.0" onMouseClicked="#changeButtonsPaneOpacity" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

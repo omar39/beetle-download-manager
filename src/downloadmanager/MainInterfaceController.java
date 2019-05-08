@@ -284,11 +284,79 @@ public class MainInterfaceController implements Initializable {
         }, 1000, 3000);
     }    
     
-    
-    
-   
+     try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomizeWindow.fxml"));
+            
+            Parent rootl = (Parent)fxmlLoader.load();
+            
+            /*
+            //anchorPane.setStyle("-fx-background-color: #ff0000;");
+            if(anchorPane == null)
+                System.out.println("hello");
+            else
+                anchorPane.setStyle("-fx-background-color: #ff0000; ");
+            */
 
-    
+            //Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
+            //System.out.println(Application.STYLESHEET_MODENA);
+              
+            CustomizeWindowController c = fxmlLoader.getController();
+            
+            /*
+            c = new CustomizeWindowController.Builder(scene)
+                    .initCustomizeAnchorPaneColorBuilder(new CustomizeAnchorPaneColor())
+                    .initCustomizeButtonPaneColorBuilder(new CustomizePaneColor())
+                    .initCustomizeStatusPaneColorBuilder(new CustomizePaneColor())
+                    .initCustomizeTableColorBuilder(new CustomizeTableColor())
+                    .initCustomizeMenuBarColorBuilder(new CustomizeMenuBarColor())
+                    .Build();
+            
+            c.customizeAnchorPaneColor.setAnchorPane(anchorPane);
+            c.customizeButtonPaneColor.setPane(buttonsPane);
+            c.customizeStatusPaneColor.setPane(statusPane);
+            c.customizeMenuBarColor.setMenuBar(menuBar);
+            c.customizeTableColor.setTable(downView);
+            */
+            
+            c.customizeAnchorPaneColor = new CustomizeAnchorPaneColor();
+            c.customizeAnchorPaneColor.setAnchorPane(anchorPane);
+            c.customizeButtonPaneColor = new CustomizePaneColor();
+            c.customizeButtonPaneColor.setPane(buttonsPane);
+            c.customizeStatusPaneColor = new CustomizePaneColor();
+            c.customizeStatusPaneColor.setPane(statusPane);
+            c.customizeMenuBarColor = new CustomizeMenuBarColor();
+            c.customizeMenuBarColor.setMenuBar(menuBar);
+            c.customizeTableColor = new CustomizeTableColor();
+            c.customizeTableColor.setTable(downView);
+                
+            //anchorPane.setOpacity(.5);
+            
+            c.customizeButtonPaneOpacity = new CustomizePaneOpacity();
+            c.customizeButtonPaneOpacity.setPane(buttonsPane);
+            c.customizeMenuBarOpacity = new CustomizeMenuBarOpacity();
+            c.customizeMenuBarOpacity.setPaneMenuBar(menuBar);
+            c.customizeStatusPaneOpacity = new CustomizePaneOpacity();
+            c.customizeStatusPaneOpacity.setPane(statusPane);
+            c.customizeTableOpacity = new CustomizeTableOpacity();
+            c.customizeTableOpacity.settable(downView);
+                        
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            //stage.initStyle(StageStyle.DECORATED);
+            stage.setTitle("CusomizeWindow");
+            Scene scene = new Scene(rootl);
+            c.scene = this.scene;
+            //this.scene.getStylesheets().add(getClass().getResource("dark_theme.css").toExternalForm()); 
+            //scene.getStylesheets().add(getClass().getResource("modena_dark.css").toExternalForm());                       
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            System.out.println(e);
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Can't Load New Window");
+        }               
 }
 
 

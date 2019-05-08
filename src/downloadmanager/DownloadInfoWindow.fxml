@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="downloadmanager.DownloadInfoWindowController">
+   <children>
+      <JFXTextField fx:id="linkTextField" layoutX="200.0" layoutY="32.0" onAction="#setLink" />
+      <JFXTextField fx:id="pathTextField" layoutX="200.0" layoutY="110.0" onAction="#setPath" />
+      <JFXComboBox fx:id="fileTybeComboBox" layoutX="200.0" layoutY="186.0" onAction="#setFileTybe" prefHeight="31.0" prefWidth="169.0" />
+      <Label layoutX="80.0" layoutY="32.0" prefHeight="31.0" prefWidth="27.0" text="Link" />
+      <Label layoutX="79.0" layoutY="110.0" prefHeight="31.0" prefWidth="30.0" text="Path" />
+      <Label layoutX="65.0" layoutY="186.0" prefHeight="31.0" prefWidth="59.0" text="File Tybe" />
+      <JFXButton fx:id="confirmButton" buttonType="RAISED" layoutX="116.0" layoutY="247.0" onAction="#confirm" prefHeight="31.0" prefWidth="169.0" text="Confirm" />
+   </children>
+</AnchorPane>

@@ -16,16 +16,18 @@ import javafx.beans.property.StringProperty;
 public  class Download extends RecursiveTreeObject<Download>{
     StringProperty selection;
     StringProperty downName; 
+    StringProperty typeStatus;
     StringProperty downStatus;
     StringProperty downSpeed;
     StringProperty downSize;
     StringProperty downTime;
     StringProperty downDate;
     
-    public Download(String selection,String downName,String downStatus,String downSpeed,String downSize,String downTime,String downDate){
+    public Download(String selection,String downName,String downStatus,String typeStatus,String downSpeed,String downSize,String downTime,String downDate){
         this.selection=new SimpleStringProperty(selection);
         this.downName=new SimpleStringProperty(downName);
         this.downStatus=new SimpleStringProperty(downStatus);
+        this.typeStatus=new SimpleStringProperty(typeStatus);
         this.downSpeed=new SimpleStringProperty(downSpeed);
         this.downSize=new SimpleStringProperty(downSize);
         this.downTime=new SimpleStringProperty(downTime);

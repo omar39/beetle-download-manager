@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="438.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="downloadmanager.MainInterfaceController">
+<AnchorPane fx:id="anchorPane" prefHeight="438.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="downloadmanager.MainInterfaceController">
    <children>
       <Pane prefHeight="453.0" prefWidth="823.0">
          <children>

@@ -5,23 +5,17 @@
  */
 package downloadmanager;
 
+import Classes.File;
 import Classes.FileTypes.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
-import static java.lang.System.exit;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.io.FileInputStream;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -45,10 +39,34 @@ public class DownloadInfoWindowController {
 
     @FXML
     void confirm(ActionEvent event) {  
+        String p = "";
+                JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new  java.io.File(System.getProperty("user.home")));
+        fileChooser.setDialogTitle("Choose a directory to save your file: ");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int result = fileChooser.showSaveDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            java.io.File selectedFile = fileChooser.getCurrentDirectory();            
+            if (fileChooser.getSelectedFile().isDirectory()) {
+                System.out.println("You selected the directory: " + fileChooser.getSelectedFile());
+                p = fileChooser.getSelectedFile().toString();
+
+            }            
+        }
+        try {
+            FileInputStream input = new FileInputStream(fileChooser.getSelectedFile().toString());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Please select an image", "Error", JOptionPane.ERROR_MESSAGE);
+        }    
+        
         int idx = fileTybeComboBox.getSelectionModel().getSelectedIndex();
         String Link = linkTextField.getText();
-        String Path = pathTextField.getText();
-         Runnable runnableTask = () -> {
+        //String Path = pathTextField.getText();
+        String Path = p;
+
+
+        
+           Runnable runnableTask = () -> {
            if (idx == 0) { 
                 MusicFile f = new MusicFile(Link, Path);
                 MainInterfaceController.Files.add(f);

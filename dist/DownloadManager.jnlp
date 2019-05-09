@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="DownloadManager.jar" size="47845" download="eager" />
+    <jar href="DownloadManager.jar" size="48601" download="eager" />
     <jar href="lib\charsets.jar" size="3036922" download="eager" />
     <jar href="lib\deploy.jar" size="5046367" download="eager" />
     <jar href="lib\javaws.jar" size="956577" download="eager" />
